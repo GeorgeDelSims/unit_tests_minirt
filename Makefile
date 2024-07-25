@@ -15,14 +15,19 @@ FUNCTION_TESTS_DIR = function_tests
 MAIN = unit_tests_main
 FUNCTION_TESTS = test_tuple_arithmetic test_matrices test_ray_transformations test_inverse_matrix
 
-# Compiler tools
+# Mac Compiler tools
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I$(MINIRT_DIR)/mlx_linux -I$(MINIRT_DIR)/includes -g 
-LDFLAGS = -L$(MINIRT_DIR)/mlx_linux -lmlx -L/usr/lib -lXext -lX11 -lm
+LDFLAGS = -L$(MINIRT_DIR)/mlx_linux -lmlx -framework OpenGL -framework AppKit
+
+# Linux Compiler tools
+#CC = gcc
+#CFLAGS = -Wall -Wextra -Werror -I$(MINIRT_DIR)/mlx_linux -I$(MINIRT_DIR)/includes -g 
+#LDFLAGS = -L$(MINIRT_DIR)/mlx_linux -lmlx -L/usr/lib -lXext -lX11 -lm
 
 # Source files for unit tests
 UNIT_TESTS_SRCS = $(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(MAIN))) \
-                  $(addprefix $(SRCS_DIR)/$(FUNCTION_TESTS_DIR)/, $(addsuffix .c, $(FUNCTION_TESTS)))
+                	$(addprefix $(SRCS_DIR)/$(FUNCTION_TESTS_DIR)/, $(addsuffix .c, $(FUNCTION_TESTS)))
 
 # Object files for unit tests
 UNIT_TESTS_OBJS = $(UNIT_TESTS_SRCS:$(SRCS_DIR)/%.c=$(OBJ_DIR)/%.o)

@@ -39,6 +39,9 @@ int main()
 
     // invert.c
     printf("\ninvert_matrix\n");
+    test_determinant4x4();
+    test_cofactor_matrix();
     test_inverse_matrix();
-    return 0;
+    
+    return (0);
 }

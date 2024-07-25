@@ -48,7 +48,7 @@ void test_inverse_matrix()
                         6, 6, 2, 8,
                         2, 3, 6, 7);
     expected = create_matrix(17, -9,	12,	16,
-	                        17, 8.75, -11.75, -16,
+                            17, 8.75, -11.75, -16,
                             -4,	-2.25, 2.75, 4,
                             1, 0.75, -0.75, -1);
     inverse = invert_matrix(matrix);
@@ -74,4 +74,109 @@ void test_inverse_matrix()
     matrix_free(expected, 4);
     matrix_free(inverse, 4);
     print_test_result("test_inverse_matrix", passed);
+}
+
+void test_determinant4x4()
+{
+    bool        passed;
+    double      **matrix;
+    double      det;
+    double      expected;
+
+    passed = true;
+
+    // Test Case 1
+    matrix = create_matrix(1, 2, 3, 4,
+                            5, 1, 3, 46,
+                            4, 6, 8, 1,
+                            4, 52, 3, 4);
+    expected = 14035.0;  // pre-calculated determinant value
+    det = determinant4x4(matrix);
+    if (fabs(det - expected) > 1e-6)
+        passed = false;
+    matrix_free(matrix, 4);
+
+    // Test Case 2
+    matrix = create_matrix(5, 6, 6, 8,
+                            2, 2, 2, 8,
+                            6, 6, 2, 8,
+                            2, 3, 6, 7);
+    expected = -8.0;  // pre-calculated determinant value
+    det = determinant4x4(matrix);
+    if (fabs(det - expected) > 1e-6)
+        passed = false;
+    matrix_free(matrix, 4);
+
+    // Test Case 3
+    matrix = create_matrix(5, 4, 1, 9,
+                            7, 6, 1, 6,
+                            4, 5, 7, 6,
+                            6, 4, 6, 4);
+    expected = -548.0;  // pre-calculated determinant value
+    det = determinant4x4(matrix);
+    if (fabs(det - expected) > 1e-6)
+        passed = false;
+    matrix_free(matrix, 4);
+
+    print_test_result("test_determinant4x4", passed);
+}
+
+void test_cofactor_matrix() 
+{
+    bool        passed;
+    double      **matrix;
+    double      **cof_matrix;
+    double      **expected;
+
+    passed = true;
+
+    // Test Case 1
+    matrix = create_matrix(1, 2, 3, 4,
+                            5, 1, 3, 46,
+                            4, 6, 8, 1,
+                            4, 52, 3, 4);
+    expected = create_matrix(-18195, 811, 8312, 1418,
+                            1450, -87, -684, 194,
+                            6300, -378, -1036, 609,
+                            -55, 284, -187, 12); // pre-calculated cofactor matrix
+    cof_matrix = cofactor_matrix(matrix);
+    if (!compare_matrices(expected, cof_matrix, 4)) 
+        passed = false;
+    matrix_free(matrix, 4);
+    matrix_free(expected, 4);
+    matrix_free(cof_matrix, 4);
+
+    // Test Case 2
+    matrix = create_matrix(5, 6, 6, 8,
+                            2, 2, 2, 8,
+                            6, 6, 2, 8,
+                            2, 3, 6, 7);
+    expected = create_matrix(-24, 24, -24, 24,
+                            -192, 72, 144, -24,
+                            144, -48, -96, 0,
+                            -144, 48, 96, 0); // pre-calculated cofactor matrix
+    cof_matrix = cofactor_matrix(matrix);
+    if (!compare_matrices(expected, cof_matrix, 4)) 
+        passed = false;
+    matrix_free(matrix, 4);
+    matrix_free(expected, 4);
+    matrix_free(cof_matrix, 4);
+
+    // Test Case 3
+    matrix = create_matrix(5, 4, 1, 9,
+                            7, 6, 1, 6,
+                            4, 5, 7, 6,
+                            6, 4, 6, 4);
+    expected = create_matrix(-81, 117, -9, -35,
+                            -6, -42, 90, -30,
+                            13, -45, 29, 39,
+                            36, 6, -48, 18); // pre-calculated cofactor matrix
+    cof_matrix = cofactor_matrix(matrix);
+    if (!compare_matrices(expected, cof_matrix, 4)) 
+        passed = false;
+    matrix_free(matrix, 4);
+    matrix_free(expected, 4);
+    matrix_free(cof_matrix, 4);
+
+    print_test_result("test_cofactor_matrix", passed);
 }

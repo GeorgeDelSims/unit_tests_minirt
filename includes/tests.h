@@ -1,7 +1,7 @@
 #ifndef TESTS_H
 #define TESTS_H
 
-#include "../../../minirt/includes/minirt.h"
+#include "../../minirt/includes/minirt.h"
 
 // ANSI escape codes for colored output
 #define TERM_RED "\x1B[31m"
@@ -36,5 +36,7 @@ void    test_matrix_vect_mul();
 
 // inverse
 void    test_inverse_matrix();
+void 	test_determinant4x4();
+void 	test_cofactor_matrix();
 
 #endif
